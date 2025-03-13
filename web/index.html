@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Bootstrap, WebSocket, Node.js and Ollama, in that order.">
+    <link rel="stylesheet" href="style/bootstrap.min.css">
+    <link rel="stylesheet" href="style/bootstrap-icons.min.css">
+    <script type="module" src="js/color-modes.js"></script>
+    <title> BoWsNoLlama </title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg fixed-top bg-body-secondary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="./">
+          <i class="bi-basket3"></i> BoWsNoLlama
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#nav" aria-controls="nav"
+                aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          </ul>
+          <ul class="navbar-nav">
+            <!-- List of open source software used in this web application -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" role="button"
+                 data-bs-toggle="dropdown" aria-expanded="false">
+                Open Source
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow">
+                <li><h6 class="dropdown-header"> Built using: </h6></li>
+                <li>
+                  <a class="dropdown-item" target="_blank"
+                     href="https://getbootstrap.com/">
+                    <i class="bi-bootstrap"></i> Bootstrap
+                    <span class="badge text-bg-info ms-1"> MIT </span>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" target="_blank"
+                     href="https://icons.getbootstrap.com/">
+                    <i class="bi-bootstrap"></i> Bootstrap Icons
+                    <span class="badge text-bg-info ms-1"> MIT </span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Content -->
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
+          <p class="my-5"> &nbsp; </p>
+          <div class="input-group my-5">
+            <textarea class="form-control" aria-label="Query"
+                      id="queryText"></textarea>
+            <button class="btn btn-outline-secondary" type="button"
+                    id="queryButton"> Query </button>
+          </div>
+          <div class="card">
+            <div class="card-body" id="responseText"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScripts -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/bowsnollama.js"></script>
+  </body>
+</html>

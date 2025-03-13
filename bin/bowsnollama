@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+const BoWsNoLlama = require('../lib/bowsnollama.js');
+
+console.log('Starting BoWsNoLlama...');
+
+let server = new BoWsNoLlama();
