@@ -14,7 +14,7 @@ websocket.addEventListener('message', (event) => {
   connectIcon.setAttribute('class', 'bi-cloud-arrow-up text-success');
   try {
     let message = JSON.parse(event.data);
-    responseText.textContent += message.data;
+    if(message.type === 'response') {  handleResponse(message.data); }
   }
   catch(err) {}
 });
@@ -33,3 +33,13 @@ queryButton.addEventListener('click', () => {
   responseText.textContent = '';
   websocket.send(JSON.stringify(message));
 });
+
+// Handle a response message
+handleResponse(data) {
+  if(typeof data.message?.content === 'string') {
+    responseText.textContent += data.message.content;
+  }
+  if(data.done) {
+    connectIcon.setAttribute('class', 'bi-cloud-fill text-success');
+  }
+}
