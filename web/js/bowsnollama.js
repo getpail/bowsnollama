@@ -35,7 +35,7 @@ queryButton.addEventListener('click', () => {
 });
 
 // Handle a response message
-handleResponse(data) {
+function handleResponse(data) {
   if(typeof data.message?.content === 'string') {
     responseText.textContent += data.message.content;
   }
