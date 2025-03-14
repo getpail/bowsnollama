@@ -29,6 +29,7 @@ websocket.addEventListener('close', (event) => {
 
 // Handle Query button click
 queryButton.addEventListener('click', () => {
+  connectIcon.setAttribute('class', 'bi-cloud-arrow-down');
   let message = { type: "query", data: queryText.value };
   responseText.textContent = '';
   websocket.send(JSON.stringify(message));
