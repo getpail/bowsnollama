@@ -36,10 +36,16 @@ queryButton.addEventListener('click', () => {
 });
 
 // Handle a response message
+let markdownBuffer = '';
 function handleResponse(data) {
   if(typeof data.message?.content === 'string') {
-    responseText.textContent += data.message.content;
+    markdownBuffer += data.message.content;
+
+    // Render the entire buffer each time
+    const rendered = marked.parse(markdownBuffer);
+    responseText.innerHTML = rendered;
   }
+
   if(data.done) {
     connectIcon.setAttribute('class', 'bi-cloud-fill text-success');
   }
