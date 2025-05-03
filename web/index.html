@@ -1,125 +1,145 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Bootstrap, WebSocket, Node.js and Ollama, in that order.">
-    <link rel="stylesheet" href="style/bootstrap.min.css">
-    <link rel="stylesheet" href="style/bootstrap-icons.min.css">
-    <style>
-      #responseText table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      #responseText table th, #responseText table td {
-        border: 1px solid #fff;
-        padding: 8px;
-      }
-    </style>
-    <script type="module" src="js/color-modes.js"></script>
-    <script src="js/marked.min.js"></script>
-    <title> BoWsNoLlama </title>
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-lg fixed-top bg-body-secondary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="./">
-          <i class="bi-basket3"></i> BoWsNoLlama
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#nav" aria-controls="nav"
-                aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="nav">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          </ul>
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link">
-                <i id="connectIcon" class="bi-cloud"></i>
-              </a>
-            </li>
-            <!-- Colour theme chooser -->
-            <li class="nav-item dropdown">
-              <button class="btn btn-link nav-link dropdown-toggle"
-                      id="bd-theme" type="button" aria-expanded="false"
-                      data-bs-toggle="dropdown" data-bs-display="static"
-                      aria-label="Toggle theme (auto)">
-                <i class="bi-circle-half"></i>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end shadow"
-                  aria-labelledby="bd-theme-text">
-                <li>
-                  <button type="button" class="dropdown-item"
-                          data-bs-theme-value="light" aria-pressed="false">
-                    <i class="bi-sun-fill"></i> Light
-                  </button>
-                </li>
-                <li>
-                  <button type="button" class="dropdown-item"
-                          data-bs-theme-value="dark" aria-pressed="false">
-                    <i class="bi-moon-fill"></i> Dark
-                  </button>
-                </li>
-                <li>
-                  <button type="button" class="dropdown-item active"
-                          data-bs-theme-value="auto" aria-pressed="true">
-                    <i class="bi-circle-half"></i> Auto
-                  </button>
-                </li>
-              </ul>
-            </li>
-            <!-- List of open source software used in this web application -->
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" role="button"
-                 data-bs-toggle="dropdown" aria-expanded="false">
-                Open Source
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end shadow">
-                <li><h6 class="dropdown-header"> Built using: </h6></li>
-                <li>
-                  <a class="dropdown-item" target="_blank"
-                     href="https://getbootstrap.com/">
-                    <i class="bi-bootstrap"></i> Bootstrap
-                    <span class="badge text-bg-info ms-1"> MIT </span>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" target="_blank"
-                     href="https://icons.getbootstrap.com/">
-                    <i class="bi-bootstrap"></i> Bootstrap Icons
-                    <span class="badge text-bg-info ms-1"> MIT </span>
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <!-- Content -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Bootstrap, WebSocket, Node.js and Ollama, in that order.">
+  <link rel="stylesheet" href="style/bootstrap.min.css">
+  <link rel="stylesheet" href="style/bootstrap-icons.min.css">
+  <script type="module" src="js/color-modes.js"></script>
+  <script src="js/marked.min.js"></script>
+  <title>BoWsNoLlama</title>
+  <style>
+    html, body {
+      overflow-x: hidden;
+      background-color: #004b84;
+      margin: 0;
+      padding: 0;
+    }
+    .sidebar {
+      position: fixed;
+      top: 56px;
+      bottom: 0;
+      left: 0;
+      width: 200px;
+      background-color: #79c9fa;
+      padding-top: 1rem;
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+    .sidebar .nav-link {
+      color: #fff;
+    }
+    .sidebar .nav-link:hover {
+      color: #ccc;
+    }
+    .main-content {
+      margin-top: 56px;
+      margin-left: 200px;
+      padding: 0;
+      width: calc(100vw - 200px);
+    }
+    #conversation {
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top bg-body-secondary">
     <div class="container-fluid">
-      <div class="row justify-content-center">
-        <div class="col-sm-12 col-md-10 col-lg-8 col-xl-6">
-          <p class="my-5"> &nbsp; </p>
-          <div class="input-group my-5">
-            <textarea class="form-control" aria-label="Query"
-                      id="queryText"></textarea>
-            <button class="btn btn-outline-secondary" type="button"
-                    id="queryButton"> Query </button>
-          </div>
-          <div class="card">
-            <div class="card-body">
-              <div id="responseText"></div>
-            </div>
-          </div>
-        </div>
+      <a class="navbar-brand" href="./">
+        <i class="bi-basket3"></i> BoWsNoLlama
+      </a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="modelDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Select Model
+          </a>
+          <ul id="modelMenu" class="dropdown-menu" aria-labelledby="modelDropdown">
+            <li><a class="dropdown-item" href="#">Select Model</a></li>
+            <li><a class="dropdown-item" href="#">gemma3:27b</a></li>
+            <li><a class="dropdown-item" href="#">gemma3:latest</a></li>
+            <li><a class="dropdown-item" href="#">qwq:latest</a></li>
+            <li><a class="dropdown-item" href="#">deepseek-r1:32b</a></li>
+            <li><a class="dropdown-item" href="#">deepseek-r1:latest</a></li>
+            <li><a class="dropdown-item" href="#">deepseek-r1:1.5b</a></li>
+            <li><a class="dropdown-item" href="#">llama3.3:latest</a></li>
+            <li><a class="dropdown-item" href="#">llama3.1:latest</a></li>
+            <li><a class="dropdown-item" href="#">gemma2:9b</a></li>
+            <li><a class="dropdown-item" href="#">gemma2:latest</a></li>
+            <li><a class="dropdown-item" href="#">llava-phi3:latest</a></li>
+            <li><a class="dropdown-item" href="#">bluebeam:latest</a></li>
+            <li><a class="dropdown-item" href="#">llama3:latest</a></li>
+            <li><a class="dropdown-item" href="#">llama2-uncensored:latest</a></li>
+            <li><a class="dropdown-item" href="#">llama3:70b</a></li>
+          </ul>
+        </li>
+      </ul>
+      <!-- Search Bar -->
+      <form class="d-flex ms-3" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-light" type="submit">Search</button>
+      </form>
+
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#nav" aria-controls="nav"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link">
+              <i id="connectIcon" class="bi-cloud"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Survey</a>
+          </li>
+          <li class="nav-item dropdown">
+            <button class="btn btn-link nav-link dropdown-toggle"
+                    id="bd-theme" type="button" aria-expanded="false"
+                    data-bs-toggle="dropdown" data-bs-display="static"
+                    aria-label="Toggle theme (auto)">
+              <i class="bi-circle-half"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme">
+              <li><button type="button" class="dropdown-item" data-bs-theme-value="light">Light</button></li>
+              <li><button type="button" class="dropdown-item" data-bs-theme-value="dark">Dark</button></li>
+              <li><button type="button" class="dropdown-item active" data-bs-theme-value="auto">Auto</button></li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
+  </nav>
 
-    <!-- JavaScripts -->
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/bowsnollama.js"></script>
-  </body>
+  <div class="sidebar">
+    <nav class="nav flex-column">
+      <a class="nav-link" href="#">My Models</a>
+      <a class="nav-link" href="#">My Data</a>
+      <a class="nav-link" href="#">My Projects</a>
+      <a class="nav-link" href="#">PAILPals</a>
+    </nav>
+  </div>
+
+  <div class="container-fluid main-content">
+    <div id="conversation"></div>
+    
+  </div>
+
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/bowsnollama.js"></script>
+  <script>
+    document.querySelectorAll('#modelMenu .dropdown-item').forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('modelDropdown').textContent = this.textContent;
+      });
+    });
+  </script>
+</body>
 </html>
