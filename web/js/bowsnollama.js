@@ -86,10 +86,10 @@ function submitQueryFrom(textarea, button) {
 // Add a new input area at the end
 function addNewInputBox() {
   const inputGroup = document.createElement('div');
-  inputGroup.className = 'input-group my-5';
+  inputGroup.className = 'input-group mt-5';
   inputGroup.innerHTML = `
     <textarea class="form-control" aria-label="Query" id="queryText" rows="1"></textarea>
-    <button class="btn btn-outline-secondary" type="button" id="queryButton"> Query </button>
+    <button class="btn btn-secondary" type="button" id="queryButton"><i class="bi-question-lg"></i></button>
   `;
   conversation.appendChild(inputGroup);
 
