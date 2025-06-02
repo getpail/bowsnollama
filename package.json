@@ -1,6 +1,6 @@
 {
   "name": "bowsnollama",
-  "description": "Solid Server for Offy",
+  "description": "Bootstrap, WebSocket, Node.js and Ollama, in that order, hence the name",
   "version": "0.1.0",
   "engines": {
     "node": ">=20.0.0"
@@ -14,9 +14,9 @@
     "url": "https://github.com/getpail/bowsnollama.git"
   },
   "dependencies": {
-    "express": "^4.21.2",
-    "ollama": "^0.5.14",
-    "ws": "^8.18.1"
+    "express": "^5.1.0",
+    "ollama": "^0.5.16",
+    "ws": "^8.18.2"
   },
   "devDependencies": {},
   "bugs": {
