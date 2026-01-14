@@ -14,9 +14,9 @@
     "url": "https://github.com/getpail/bowsnollama.git"
   },
   "dependencies": {
-    "express": "^5.1.0",
-    "ollama": "^0.5.16",
-    "ws": "^8.18.2"
+    "express": "^5.2.1",
+    "ollama": "^0.6.3",
+    "ws": "^8.19.0"
   },
   "devDependencies": {},
   "bugs": {
