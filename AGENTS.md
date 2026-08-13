@@ -23,9 +23,10 @@ vanilla-JS frontend, streaming responses from a local Ollama
 
 ## WebSocket protocol (keep both sides in sync)
 - Client → server: `{ "type": "query", "data": "<text>" }`. The server reads
-  only `message.data` and ignores `type`; any JSON with `.data` triggers a query.
-  Non-JSON input throws inside async `handleQuery` (unhandled rejection, no error
-  handling).
+  only `message.data` and ignores `type`; any JSON with a non-empty string
+  `.data` triggers a query. Malformed input and Ollama errors are caught and
+  logged inside `handleQuery` (never crashes the process); the client is not
+  notified.
 - Server → client: one `{ "type": "response", "data": { message, model, done } }`
   per streamed chunk; `done: true` on the last chunk. Client re-renders the
   accumulated markdown per chunk and resets its buffer on `done`.
@@ -40,6 +41,9 @@ vanilla-JS frontend, streaming responses from a local Ollama
   entry per streamed chunk, never aggregated or truncated), and each new query
   calls `instance.ollama.abort()`, killing ALL in-flight requests — only one
   query can stream at a time.
+- Server errors are logged, not surfaced to the client: a failed query leaves
+  the UI stuck (no `done: true` arrives, no new input box) until the next query
+  or a refresh.
 - Style: CommonJS (`require`/`module.exports`) with JSDoc on every function —
   keep new server modules in this style. Commits on `develop` are small and
   single-file; package.json version is bumped manually.
